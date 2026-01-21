@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RANDOMIZER</title>
+</head>
+<style>
+    body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image:url("nasser.png");
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.main-box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    text-align: center;
+    width: 300px;
+}
+
+#randomizers {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    min-height: 30px;
+}
+
+#inputtext {
+    width: 90%;
+    padding: 10px;
+    margin-top: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+#submit {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#submit:hover {
+    background: #45a049;
+}
+#reset {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    background: #af4c4c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#reset:hover {
+    background: #a05345;
+}
+
+</style>
+<body>
+    <div class="main-box">
+        <p id="randomizers">TITE</p>
+        <button id="submit">ROLL</button>
+        <input type="text" id="inputtext" placeholder="NAMES">
+        <button id="reset">RESET NAMES</button>
+    </div>
+</body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const tite = document.getElementById('randomizers');
+    const button = document.getElementById('submit');
+    const tiext = document.getElementById('inputtext');
+    const reset = document.getElementById("reset");
+    
+    let names = [];
+    const owian = [
+        "brent",
+        "ezekiel",
+        "francis",
+        "gerald",
+        "nasser",
+        "peter",
+        "renz",
+        "rodolfo",
+        "steven",
+        "vaughn",
+        "clarence",
+        "ejay",
+        "jc"
+    ];
+
+document.addEventListener("keydown", function(kiss){
+    if (kiss.key === "Enter") {
+        const input = tiext.value.trim();
+
+        if (input === "") return;
+
+        if (input === "gabthegoat") {
+            names.push(...owian);  
+            alert("ALL BISAYA NAMES ADDED:\n" + names.join("\n"));
+
+        } else {
+            names.push(input);
+            alert("ADDED:\n" + names.join("\n"));
+
+        }
+
+        tiext.value = "";
+    }
+});
+
+button.onclick = function () {
+
+    if (names.length === 0) {
+        alert("NO NAMES TO RANDOMIZE FUCK YU");
+        return;
+    }
+
+    button.disabled = true;
+    document.querySelector("#submit").style.background = "gray";
+
+    let speed = 100;
+    let cycles = 50;
+    let count = 0;
+
+    let interval = setInterval(() => {
+        let randomIndex = Math.floor(Math.random() * names.length);
+        tite.textContent = names[randomIndex];
+        count++;
+
+        if (count > cycles) {
+            clearInterval(interval);
+
+            setTimeout(() => {
+     
+                let finalIndex = Math.floor(Math.random() * names.length);
+                let finalPick = names[finalIndex];
+                tite.textContent = finalPick;
+
+                names.splice(finalIndex, 1);
+                button.disabled = false;
+                document.querySelector("#submit").style.background = "#4CAF50";
+
+            }, 2000
+        );
+        }
+    }, speed);
+};
+
+reset.onclick = function(){
+    names.length = 0;
+    tite.textContent = "TITE"; 
+    alert("NAMES HAS BEEN FUCKING CLEARED");    
+}
+
+});
+
+</script>
+</html>
